@@ -7,7 +7,7 @@ emojis = {
     "cappuccino": "🍵"
 }
 
-## TODO: Build type checking and error catches
+## TODO: Build type safety and error checks
 
 using_machine = True
 
