@@ -1,2 +1,0 @@
-
-            brush.teleport(x, y)

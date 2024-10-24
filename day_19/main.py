@@ -1,4 +1,6 @@
-# WIP
+import turtle as t
+from turtle import Screen
+import random
 
 
 def main() -> None:
