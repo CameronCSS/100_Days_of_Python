@@ -1,6 +1,7 @@
 from turtle import Turtle, Screen
 from snake import Snake
 from food import Food
+from scoreboard import Scoreboard
 import random
 import time
 
@@ -9,12 +10,14 @@ def main() -> None:
     game = True
     
     screen = Screen()
-    screen.setup(width=625, height=610)
+    screen.setup(width=600, height=600)
     screen.bgcolor("black")
     screen.title("SNAKE")
     screen.tracer(0)
 
     snake = Snake()
+    apple = Food()
+    scoreboard = Scoreboard()
     screen.listen()
     screen.onkey(snake.up, "Up")
     screen.onkey(snake.down, "Down")
@@ -27,21 +30,22 @@ def main() -> None:
         
         snake.move()
         
-        # This gets snake to edge of screen but will be problematic when it comes to grid system for food.  WIP
+        if snake.head.distance(apple) < 15:
+            apple.refresh()
+            snake.extend()
+            scoreboard.increase_score()
+        for segment in snake.segments[1:]:
+            if snake.head.distance(segment) < 10:
+                game = False
+                message = f"GAME OVER"
+                snake.write(message)
         
-        if snake.x_cord() > 300 or snake.x_cord() < -305:
+        if snake.x_cord() > 290 or snake.x_cord() < -290 or snake.y_cord() > 290 or snake.y_cord() < -290:
             game = False
-            message = f"You lost!"
+            message = f"GAME OVER"
             snake.write(message)
-        elif snake.y_cord() > 300 or snake.y_cord() <= -305:
-            game = False
-            message = f"You lost!"
-            snake.write(message)
-    def end_game() -> None:
-        game = False
-        
-    
-    
+            
+               
     screen.exitonclick()
 
 if __name__ == '__main__':
