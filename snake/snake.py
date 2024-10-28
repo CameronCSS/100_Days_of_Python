@@ -14,6 +14,7 @@ class Snake:
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
+        self.move_speed = 0.2
         
     def create_snake(self) -> None:
         for position in STARTING_POSITION:
@@ -35,6 +36,7 @@ class Snake:
         
     def extend(self) -> None:
         self.add_segment(self.segments[-1].position())
+        self.move_speed *= 0.9
         
         
     def left(self) -> None:

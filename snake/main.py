@@ -26,7 +26,7 @@ def main() -> None:
         
     while game:
         screen.update()
-        time.sleep(0.1)
+        time.sleep(snake.move_speed)
         
         snake.move()
         
