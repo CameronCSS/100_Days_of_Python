@@ -8,9 +8,9 @@ print("Welcome to the PyPassword Generator!\n")
 
 
 
-nr_letters = random.randrange(5,14)
+nr_letters = random.randrange(5,7)
 nr_symbols = random.randrange(2,5)
-nr_numbers = random.randrange(3,7)
+nr_numbers = random.randrange(3,5)
 
 
 password_list = []
