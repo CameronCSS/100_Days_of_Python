@@ -1,6 +1,7 @@
-# Project Title
+# Snake
 
-Classic Snake
+![image](https://github.com/user-attachments/assets/5267e720-6826-414a-8f17-4a1cdcfff8d4)
+
 
 ## Description
 
