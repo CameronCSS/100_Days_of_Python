@@ -64,3 +64,5 @@ class Snake:
     def write(self, message) -> None:
         self.head.home()
         self.head.write(message, align="center", font=("Arial", 20, "normal"))
+        
+        
