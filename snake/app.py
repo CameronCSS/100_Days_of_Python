@@ -9,6 +9,8 @@ if 'last_refresh' not in st.session_state:
     st.session_state.last_refresh = time.time()
 if 'game_running' not in st.session_state:
     st.session_state.game_running = False
+if 'game_score' not in st.session_state:
+    st.session_state.game_score = 0  # Initialize score storage
 
 def run_game():
     # Start the game and set the game_running state
@@ -56,14 +58,21 @@ if st.button('🎮 Play Game', use_container_width=True) and not st.session_stat
     run_game()
     st.success("Game launched! The game window should open shortly...")
 
-# message when the game is not running
+# Message when the game is not running
 if not st.session_state.game_running:
     st.success("Start a new game.")
 
 # Ensure database is created
 Database.create_db()
 
-# Create columns
+# After the game ends, get the score and ask for the player's name
+if not st.session_state.game_running and st.session_state.game_score > 0:
+    name = st.text_input("Enter your name for the leaderboard:", value="Anonymous")
+    if st.button("Submit Score"):
+        Database.insert_score(st.session_state.game_score, name)
+        st.success("Score submitted successfully!")
+
+# Create columns for scores display
 col1, col2 = st.columns([2, 1])
 
 with col1:

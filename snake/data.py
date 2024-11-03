@@ -1,7 +1,5 @@
 import sqlite3
 import datetime
-import tkinter as tk
-from tkinter import simpledialog
 
 class Database():
     
@@ -35,7 +33,6 @@ class Database():
         if len(top_ten) < 10:
             return True
         
-        # Compare with the lowest score in top 10 (not the ID)
         lowest_top_ten = top_ten[-1][0]
         return score > lowest_top_ten
         
@@ -44,18 +41,12 @@ class Database():
         conn = sqlite3.connect('snake_scores.db')
         if Database.is_top_ten(score):
             if name is None:
-                root = tk.Tk()
-                root.withdraw()
-                
-                # get player name
-                name = simpledialog.askstring("Top Score!", 
-                    f"Congratulations! You got in the top 10!\nEnter your name:")
-                
-                # Destroy the root window after getting input
-                root.destroy()
-                
-            if not name:
-                name = "Anonymous"
+                name = "Anonymous"  # Set default name
+            
+                # You can collect the name using Streamlit if needed
+                # Uncomment the following line if you want to get input directly
+                # name = st.text_input("Enter your name:", value="Anonymous")
+
         else:
             name = "Anonymous"
             
@@ -120,10 +111,9 @@ class Database():
         scores_by_hour = []
         for hour, score_string in cursor.fetchall():
             scores = [int(s) for s in score_string.split(',')]
-            # Convert to 12-hour format with AM/PM
             hour_int = int(hour)
             period = 'AM' if hour_int < 12 else 'PM'
-            hour_12 = f"{hour_int % 12 or 12}:00 {period}"  # Converts 0 to 12 for midnight
+            hour_12 = f"{hour_int % 12 or 12}:00 {period}"
 
             scores_by_hour.append({
                 'Hour': hour_12,
@@ -133,8 +123,6 @@ class Database():
             })
         conn.close()
         return scores_by_hour
-
-
 
     @staticmethod
     def get_scores_by_day_of_week():

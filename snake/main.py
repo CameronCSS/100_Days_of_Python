@@ -4,7 +4,6 @@ from food import Food
 from scoreboard import Scoreboard
 from data import Database
 import time
-import tkinter as tk
 
 def main() -> None:
     game = True
@@ -70,7 +69,7 @@ def main() -> None:
         nonlocal game
         game = False
         message = "GAME OVER"
-        snake.write(message)  # Assuming snake has a write method for displaying text
+        snake.write(message) 
         Database.insert_score(scoreboard.score)
     
     # Start the game loop
