@@ -5,7 +5,7 @@ class Database():
     
     @staticmethod
     def create_db() -> None:
-        conn = sqlite3.connect('snake_scores.db')
+        conn = sqlite3.connect('snake/snake_scores.db')
         cursor = conn.cursor()
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS scores
@@ -20,7 +20,7 @@ class Database():
         
     @staticmethod
     def is_top_ten(score) -> bool:
-        conn = sqlite3.connect('snake_scores.db')
+        conn = sqlite3.connect('snake/snake_scores.db')
         cursor = conn.cursor()
         cursor.execute('''
         SELECT score FROM scores
@@ -38,14 +38,10 @@ class Database():
         
     @staticmethod
     def insert_score(score, name=None) -> None:
-        conn = sqlite3.connect('snake_scores.db')
+        conn = sqlite3.connect('snake/snake_scores.db')
         if Database.is_top_ten(score):
             if name is None:
-                name = "Anonymous"  # Set default name
-            
-                # You can collect the name using Streamlit if needed
-                # Uncomment the following line if you want to get input directly
-                # name = st.text_input("Enter your name:", value="Anonymous")
+                name = "Anonymous"
 
         else:
             name = "Anonymous"
@@ -63,7 +59,7 @@ class Database():
         
     @staticmethod
     def get_scores() -> tuple:
-        conn = sqlite3.connect('snake_scores.db')
+        conn = sqlite3.connect('snake/snake_scores.db')
         cursor = conn.cursor()
         cursor.execute('''
         SELECT
@@ -79,9 +75,25 @@ class Database():
         conn.close()
         return scores
     
+    
+    @staticmethod
+    def get_top_score() -> int:
+        conn = sqlite3.connect('snake/snake_scores.db')
+        cursor = conn.cursor()    
+        cursor.execute('''
+            SELECT MAX(score) 
+            FROM scores 
+                    ''')
+        
+        top_score = cursor.fetchone()[0]
+        
+        conn.close()
+        return top_score or 0
+    
+    
     @staticmethod
     def get_todays_top_score() -> int:
-        conn = sqlite3.connect('snake_scores.db')
+        conn = sqlite3.connect('snake/snake_scores.db')
         cursor = conn.cursor()
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
     
@@ -91,14 +103,14 @@ class Database():
             WHERE DATE(date) = DATE(?)
         ''', (current_date,))
         
-        top_score = cursor.fetchone()[0]
+        todays_top_score = cursor.fetchone()[0]
         
         conn.close()
-        return top_score or 0
+        return todays_top_score or 0
     
     @staticmethod
     def get_scores_by_time_of_day():
-        conn = sqlite3.connect('snake_scores.db')
+        conn = sqlite3.connect('snake/snake_scores.db')
         cursor = conn.cursor()
         cursor.execute('''
             SELECT 
@@ -126,7 +138,7 @@ class Database():
 
     @staticmethod
     def get_scores_by_day_of_week():
-        conn = sqlite3.connect('snake_scores.db')
+        conn = sqlite3.connect('snake/snake_scores.db')
         cursor = conn.cursor()
         cursor.execute('''
             SELECT 

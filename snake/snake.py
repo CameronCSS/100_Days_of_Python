@@ -62,7 +62,19 @@ class Snake:
         return self.head.ycor()
     
     def write(self, message) -> None:
+        self.head.clear()
         self.head.home()
         self.head.write(message, align="center", font=("Arial", 20, "normal"))
+        self.head.hideturtle()  # Hide the snake head after writing the message
+        
+    def reset(self) -> None:
+        self.head.clear()
+        # Hide the segments and clear them
+        for segment in self.segments:
+            segment.hideturtle()  # Hide each segment before clearing
+        self.segments.clear()  # Clear the list of segments
+        self.create_snake()    # Recreate the snake
+        self.head = self.segments[0]  # Reset the head reference
+        self.move_speed = 0.2  # Reset move speed
         
         
