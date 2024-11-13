@@ -2,4 +2,7 @@
 *.pyc
 *.pyo
 __pycache__/
+<<<<<<< HEAD
 *.onnx
+=======
+>>>>>>> 748331c2e08f54b23a26fc9d2b5216856ced56af
